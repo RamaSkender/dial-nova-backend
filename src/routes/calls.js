@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { makeOutboundCall } = require('../twilio');
+const { makeCall } = require('../twilio');
 const authMiddleware = require('../middleware/auth');
 const supabase = require('../supabase');
+const { getCallLogs } = require('../supabase');
 
 // Apply auth middleware to all routes in this file
 router.use(authMiddleware);
@@ -38,7 +39,7 @@ router.post('/initiate', async (req, res) => {
       return res.status(400).json({ error: '"to" phone number is required' });
     }
 
-    const call = await makeOutboundCall(to, from, webhookUrl);
+    const call = await makeCall(to, from, webhookUrl);
 
     res.json({ message: 'Call initiated successfully', call_sid: call.sid });
   } catch (error) {
