@@ -29,6 +29,7 @@ router.post('/initiate', async (req, res) => {
   try {
     const { to } = req.body;
     const from = process.env.TWILIO_PHONE_NUMBER;
+    const userId = req.user.id;
 
     // The base URL for the webhook needs to be the publicly accessible URL of the server
     // For local development, this is the ngrok URL. For production, it's the public URL.
@@ -39,7 +40,7 @@ router.post('/initiate', async (req, res) => {
       return res.status(400).json({ error: '"to" phone number is required' });
     }
 
-    const call = await makeCall(to, from, webhookUrl);
+    const call = await makeCall(to, from, webhookUrl, userId);
 
     res.json({ message: 'Call initiated successfully', call_sid: call.sid });
   } catch (error) {

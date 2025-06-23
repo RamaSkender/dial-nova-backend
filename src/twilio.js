@@ -2,10 +2,11 @@ require('dotenv').config();
 const twilio = require('twilio');
 const supabase = require('./supabase');
 const { twilioAccountSid, twilioAuthToken, twilioPhoneNumber, appUrl } = require('../config/appConfig');
+const { logCall } = require('./supabase');
 
 const client = twilio(twilioAccountSid, twilioAuthToken);
 
-const makeCall = async (to, from, webhookUrl) => {
+const makeCall = async (to, from, webhookUrl, userId) => {
   try {
     const call = await client.calls.create({
       to: to,
@@ -19,6 +20,7 @@ const makeCall = async (to, from, webhookUrl) => {
       to_number: call.to,
       status: call.status,
       direction: 'outbound',
+      user_id: userId,
     });
 
     return call;
