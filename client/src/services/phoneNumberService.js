@@ -1,7 +1,7 @@
 import axios from 'axios';
 import authHeader from './auth-header';
 
-const API_URL = '/api/phone-numbers/';
+const API_URL = 'https://dial-nova-backend.onrender.com/api/phone-numbers/';
 
 const getPhoneNumbers = () => {
   return axios.get(API_URL, { headers: authHeader() });

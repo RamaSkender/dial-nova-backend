@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = '/api/auth/';
+const API_URL = 'https://dial-nova-backend.onrender.com/api/auth/';
 
 const signup = (email, password) => {
   return axios.post(API_URL + 'signup', {
